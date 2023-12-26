@@ -17,7 +17,7 @@ const Card = () => {
             </section>
             <div className='statusPriceWrapper'>
                 <section className='card__status'>
-                    <Select label='status' />
+                    <Select label='status' options={['Available', 'Busy', 'Unavailable']} />
                 </section>
                 <section className='card__price'>
                     00.00 UAH/hr.

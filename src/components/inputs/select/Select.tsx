@@ -1,20 +1,22 @@
 import './Select.sass'
 
 interface ISelectProps {
-    label: string
+    label: string,
+    options: string[]
 }
 
-const Select = ({label}: ISelectProps) => {
+const Select = ({label, options}: ISelectProps) => {
+
     return (
         <div className='custom-select'>
             <label htmlFor={label}>{label}:</label>
             <select id={label}>
-                <option value='available'>Available</option>
-                <option value='unavailable'>Busy</option>
-                <option value='pending'>Unavailable</option>
+                {options.map(item => (
+                    <option key={item} value={item}>{item}</option>
+                ))}
             </select>
         </div>
-    )
+    );
 }
 
 export default Select;

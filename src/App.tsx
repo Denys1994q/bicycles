@@ -1,13 +1,13 @@
 import './App.sass'
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
-import Home from './screens/home/Home';
+import AdminPanel from './screens/admin-panel/AdminPanel';
 
 function App() {
     return (
         <section className='main-container'>
             <Header />
-                <Home />
+                <AdminPanel />
             <Footer firstName='Denys' lastName='Rybachok' />
         </section>
     )
