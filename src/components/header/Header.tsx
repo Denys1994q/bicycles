@@ -1,8 +1,9 @@
+import './Header.sass'
 
 const Header = () => {
     return (
-        <header>
-            header
+        <header className="header">
+            <h1 className='header__title'>admin.bike-booking.com</h1>
         </header>
     )
 }
