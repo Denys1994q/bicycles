@@ -29,6 +29,7 @@ const CardForm = () => {
     const [descriptionError, setDescriptionError] = useState(false);
     const [descriptionIsDirty, setDescriptionIsDirty] = useState(false);
     const [isDisabledSubmitBtn, setIsDisabledSubmitBtn] = useState(true);
+    const [clearValue, setClearValue] = useState(false)
 
     const onInputChange = (id: string, value: string) => {
         console.log(id, value)
@@ -46,6 +47,7 @@ const CardForm = () => {
     };
 
     useEffect(() => {
+        setClearValue(false)
         validateForm();
     }, [formData]);
 
@@ -81,19 +83,37 @@ const CardForm = () => {
         } else {
             setIsDisabledSubmitBtn(true);
         }
-    }, [nameError, typeError, colorError, descriptionError, wheelSizeError, wheelSizeIsDirty, priceError, priceIsDirty, idError, idIsDirty]);
+    }, [
+        nameError, 
+        typeError, 
+        colorError, 
+        descriptionError, 
+        wheelSizeError, 
+        wheelSizeIsDirty, 
+        priceError, 
+        priceIsDirty, 
+        idError, 
+        idIsDirty
+    ]);
+
+    const clearForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setClearValue(true)
+    }
 
     return (
         <form className='cardForm'>
             <TextInput
                 id='name'
                 placeholder='Name'
+                clearValue={clearValue}
                 onInputChange={onInputChange}
                 error={nameError}
                 errorMsg='Min 5 letters'
             />
             <TextInput
                 id='type'
+                clearValue={clearValue}
                 placeholder='Type'
                 onInputChange={onInputChange}
                 error={typeError}
@@ -101,6 +121,7 @@ const CardForm = () => {
             />
             <TextInput
                 id='color'
+                clearValue={clearValue}
                 placeholder='Color'
                 onInputChange={onInputChange}
                 error={colorError}
@@ -108,6 +129,7 @@ const CardForm = () => {
             />
             <TextInput 
                 isNumberType
+                clearValue={clearValue}
                 id='wheel_size' 
                 placeholder='Wheel size' 
                 error={wheelSizeError}
@@ -115,6 +137,7 @@ const CardForm = () => {
                 onInputChange={onInputChange} />
             <TextInput 
                 isNumberType
+                clearValue={clearValue}
                 id='price' 
                 placeholder='Price' 
                 error={priceError}
@@ -122,6 +145,7 @@ const CardForm = () => {
                 onInputChange={onInputChange} />
             <TextInput 
                 isNumberType
+                clearValue={clearValue}
                 id='id' 
                 placeholder='ID (slug)'
                 error={idError}
@@ -129,6 +153,7 @@ const CardForm = () => {
                 onInputChange={onInputChange} />
             <Textarea
                 id='description'
+                clearValue={clearValue}
                 placeholder='Description'
                 onTextareaChange={onInputChange}
                 error={descriptionError}
@@ -136,7 +161,7 @@ const CardForm = () => {
             />
             <div className='cardForm__btns'>
                 <PrimaryBtn text='save' onClick={submitForm} disabled={isDisabledSubmitBtn} />
-                <PrimaryBtn text='clear' />
+                <PrimaryBtn text='clear' onClick={clearForm} />
             </div>
         </form>
     );

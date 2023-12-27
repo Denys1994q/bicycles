@@ -5,12 +5,13 @@ interface ITextInputProps {
     isNumberType?: boolean,
     placeholder?: string,
     id: string,
+    clearValue?: boolean,
     error?: boolean,
     errorMsg?: string,
     onInputChange?: any
 }
 
-const TextInput: React.FC<ITextInputProps> = ({id, isNumberType, placeholder, error, errorMsg, onInputChange}) => {
+const TextInput: React.FC<ITextInputProps> = ({id, isNumberType, clearValue, placeholder, error, errorMsg, onInputChange}) => {
     const [value, setValue] = useState('')
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +29,7 @@ const TextInput: React.FC<ITextInputProps> = ({id, isNumberType, placeholder, er
                 type={isNumberType ? 'number' : 'text'} 
                 className={error ? 'textInput textInput-error' : 'textInput'} 
                 placeholder={placeholder}
-                value={value}
+                value={clearValue ? '' : value}
                 onChange={handleChange} />
             {(error && errorMsg) && <p className='error-msg'>{errorMsg}</p>}
         </div>

@@ -4,12 +4,13 @@ import React, { useState, ChangeEvent } from 'react';
 interface ITextareaProps {
     id: string,
     placeholder?: string,
+    clearValue?: boolean,
     error?: boolean,
     errorMsg?: string,
     onTextareaChange?: any
 }
 
-const Textarea: React.FC<ITextareaProps> = ({id, placeholder, error, errorMsg, onTextareaChange}) => {
+const Textarea: React.FC<ITextareaProps> = ({id, clearValue, placeholder, error, errorMsg, onTextareaChange}) => {
     const [value, setValue] = useState('')
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -23,7 +24,7 @@ const Textarea: React.FC<ITextareaProps> = ({id, placeholder, error, errorMsg, o
     return (
         <div>
             <textarea 
-                value={value}
+                value={clearValue ? '' : value}
                 onChange={handleChange}
                 placeholder={placeholder} 
                 className={error ? 'textarea textarea-error' : 'textarea'} >
