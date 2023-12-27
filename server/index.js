@@ -2,6 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import { BicyclesController } from "./controllers/index.js";
+import {createBicycleValidation} from "./validation/validation.js";
+import handleValidationErrors from "./utils/handleValidationErrors.js";
 
 const app = express();
 app.use(express.json());
@@ -15,11 +18,18 @@ app.use(cors(corsOptions));
 dotenv.config();
 
 mongoose
-  .connect(
-    `mongodb+srv://${process.env.MONGODB_KEY}@cluster0.l8hygki.mongodb.net/bicycles-db?retryWrites=true&w=majority`
-  )
-  .then(() => console.log("DB Ok"))
-  .catch((err) => console.log("ERROR", err));
+    .connect(
+        `mongodb+srv://${process.env.MONGODB_KEY}@cluster0.l8hygki.mongodb.net/bicycles-db?retryWrites=true&w=majority`
+    )
+    .then(() => console.log("DB Ok"))
+    .catch(err => console.log("ERROR", err));
+
+// app bicycle
+app.post("/create-product", createBicycleValidation, handleValidationErrors, BicyclesController.createBicycle);
+// remove bicycle
+app.delete("/remove-product/:id", BicyclesController.removeBicycle);
+// update bicycle status
+app.put("/update-product-status/:id", BicyclesController.updateBicycleStatus);
 
 app.listen("4444", err => {
     if (err) {
