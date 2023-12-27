@@ -1,55 +1,145 @@
-import './Card-form.sass'
-import { useState } from 'react';
-import TextInput from '../inputs/text-input/Text-input';
-import Textarea from '../inputs/textarea/Textarea';
-import PrimaryBtn from '../btns/primary-btn/Primary-btn';
+import "./Card-form.sass";
+import { useState, useEffect } from "react";
+import TextInput from "../inputs/text-input/Text-input";
+import Textarea from "../inputs/textarea/Textarea";
+import PrimaryBtn from "../btns/primary-btn/Primary-btn";
 
 const CardForm = () => {
     const [formData, setFormData] = useState({
-        name: '',
-        type: '',
-        color: '',
-        wheel_size: '',
-        price: '',
-        id: '',
-        description: ''
+        name: "",
+        type: "",
+        color: "",
+        wheel_size: 0,
+        price: 0,
+        id: 0,
+        description: "",
     });
-    const [nameError, setNameError] = useState(false)
-    const [colorError, setColorError] = useState(false)
+    const [nameError, setNameError] = useState(false);
+    const [nameIsDirty, setNameIsDirty] = useState(false);
+    const [typeError, setTypeError] = useState(false);
+    const [typeIsDirty, setTypeIsDirty] = useState(false);
+    const [colorError, setColorError] = useState(false);
+    const [colorIsDirty, setColorIsDirty] = useState(false);
+    const [wheelSizeError, setWheelSizeError] = useState(false);
+    const [wheelSizeIsDirty, setWheelSizeIsDirty] = useState(false);
+    const [priceError, setPriceError] = useState(false);
+    const [priceIsDirty, setPriceIsDirty] = useState(false);
+    const [idError, setIdError] = useState(false);
+    const [idIsDirty, setIdIsDirty] = useState(false);
+    const [descriptionError, setDescriptionError] = useState(false);
+    const [descriptionIsDirty, setDescriptionIsDirty] = useState(false);
+    const [isDisabledSubmitBtn, setIsDisabledSubmitBtn] = useState(true);
 
     const onInputChange = (id: string, value: string) => {
+        console.log(id, value)
         setFormData(prevState => ({
             ...prevState,
             [id]: value,
         }));
-    }
+        id === "name" && setNameIsDirty(true);
+        id === "type" && setTypeIsDirty(true);
+        id === "color" && setColorIsDirty(true);
+        id === "description" && setDescriptionIsDirty(true);
+        id === "wheel_size" && setWheelSizeIsDirty(true);
+        id === "price" && setPriceIsDirty(true);
+        id === "id" && setIdIsDirty(true);
+    };
+
+    useEffect(() => {
+        validateForm();
+    }, [formData]);
 
     const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        validateForm()
-        console.log(formData)
-    }
+        e.preventDefault();
+        // validateForm()
+        console.log(formData);
+    };
 
     const validateForm = () => {
-        formData['name'].length < 5 ? setNameError(true) : setNameError(false)
-        formData['color'].length < 5 ? setColorError(true) : setColorError(false)
-    }
+        setNameError(nameIsDirty && formData["name"].length < 5);
+        setTypeError(typeIsDirty && formData["type"].length < 5);
+        setColorError(colorIsDirty && formData["color"].length < 5);
+        setDescriptionError(descriptionIsDirty && formData["description"].length < 5);
+        setWheelSizeError(wheelSizeIsDirty && formData["wheel_size"] <= 0);
+        setPriceError(priceIsDirty && formData["price"] <= 0);
+        setIdError(idIsDirty && formData["id"] <= 0);
+    };
+
+    useEffect(() => {
+        const nameErr = !nameError && nameIsDirty;
+        const typeErr = !typeError && typeIsDirty;
+        const colorErr = !colorError && colorIsDirty;
+        const descriptionErr = !descriptionError && descriptionIsDirty;
+        const wheelSizeErr = !wheelSizeError && wheelSizeIsDirty;
+        const priceErr = !priceError && priceIsDirty;
+        const idErr = !idError && idIsDirty;
+
+        const hasErrors = nameErr && typeErr && colorErr && descriptionErr && wheelSizeErr && priceErr && idErr;
+
+        if (hasErrors) {
+            setIsDisabledSubmitBtn(false);
+        } else {
+            setIsDisabledSubmitBtn(true);
+        }
+    }, [nameError, typeError, colorError, descriptionError, wheelSizeError, wheelSizeIsDirty, priceError, priceIsDirty, idError, idIsDirty]);
 
     return (
         <form className='cardForm'>
-            <TextInput id='name' placeholder='Name' onInputChange={onInputChange} error={nameError} />
-            <TextInput id='type' placeholder='Type' onInputChange={onInputChange} />
-            <TextInput id='color' placeholder='Color' onInputChange={onInputChange} error={colorError} />
-            <TextInput id='wheel_size' placeholder='Wheel size' onInputChange={onInputChange} />
-            <TextInput id='price' placeholder='Price' onInputChange={onInputChange} />
-            <TextInput id='id' placeholder='ID (slug)' onInputChange={onInputChange} />
-            <Textarea id='description' placeholder='Description' onTextareaChange={onInputChange}/>
+            <TextInput
+                id='name'
+                placeholder='Name'
+                onInputChange={onInputChange}
+                error={nameError}
+                errorMsg='Min 5 letters'
+            />
+            <TextInput
+                id='type'
+                placeholder='Type'
+                onInputChange={onInputChange}
+                error={typeError}
+                errorMsg='Min 5 letters'
+            />
+            <TextInput
+                id='color'
+                placeholder='Color'
+                onInputChange={onInputChange}
+                error={colorError}
+                errorMsg='Min 5 letters'
+            />
+            <TextInput 
+                isNumberType
+                id='wheel_size' 
+                placeholder='Wheel size' 
+                error={wheelSizeError}
+                errorMsg='Field is required'
+                onInputChange={onInputChange} />
+            <TextInput 
+                isNumberType
+                id='price' 
+                placeholder='Price' 
+                error={priceError}
+                errorMsg='Field is required'
+                onInputChange={onInputChange} />
+            <TextInput 
+                isNumberType
+                id='id' 
+                placeholder='ID (slug)'
+                error={idError}
+                errorMsg='Field is required' 
+                onInputChange={onInputChange} />
+            <Textarea
+                id='description'
+                placeholder='Description'
+                onTextareaChange={onInputChange}
+                error={descriptionError}
+                errorMsg='Min 5 letters'
+            />
             <div className='cardForm__btns'>
-                <PrimaryBtn text='save' onClick={submitForm} />
+                <PrimaryBtn text='save' onClick={submitForm} disabled={isDisabledSubmitBtn} />
                 <PrimaryBtn text='clear' />
             </div>
         </form>
-    )
-}
+    );
+};
 
 export default CardForm;
