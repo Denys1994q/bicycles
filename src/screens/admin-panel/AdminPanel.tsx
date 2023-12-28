@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Cards from "../../components/cards/Cards";
 import Spinner from "../../components/spinner/Spinner";
+import ErrorAlert from "../../components/error-alert/ErrorAlert";
 
 const AdminPanel = () => {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const AdminPanel = () => {
     const createNewBicycleError = useSelector((store: any) => store.BicyclesSlice.createNewBicycleError);
     const createNewBicycleErrorMsg = useSelector((store: any) => store.BicyclesSlice.createNewBicycleErrorMsg);
     const removeBicycleError = useSelector((store: any) => store.BicyclesSlice.removeBicycleError);
+    const updateBicycleStatusError = useSelector((store: any) => store.BicyclesSlice.updateBicycleStatusError);
 
     useEffect(() => {
         dispatch(getAllBicycles());
@@ -39,17 +41,17 @@ const AdminPanel = () => {
 
     type BicycleStatus = "available" | "busy" | "unavailable";
     const onUpdateCardStatus = (id: number, status: BicycleStatus) => {
-        dispatch(updateBicycleStatus({id, status}))
-    }
-
-    const errorOrCards = getAllBicyclesError || removeBicycleError ? 
-        <h4>Error, something goes wrong...</h4> : 
-        <Cards cards={bicycles} onRemoveCard={onRemoveCard} onUpdateCard={onUpdateCardStatus} />
+        dispatch(updateBicycleStatus({ id, status }));
+    };
 
     return (
         <section className='adminPanel'>
             <div className='adminPanel__cards'>
-                {getAllBicyclesLoading ? <Spinner /> : <>{errorOrCards}</>}
+                {getAllBicyclesLoading ? (
+                    <Spinner />
+                ) : (
+                    <Cards cards={bicycles} onRemoveCard={onRemoveCard} onUpdateCard={onUpdateCardStatus} />
+                )}
             </div>
             <div className='adminPanel__form'>
                 <CardForm
@@ -60,6 +62,11 @@ const AdminPanel = () => {
                 />
                 <Statistics data={statsData} />
             </div>
+            {getAllBicyclesError || removeBicycleError || updateBicycleStatusError ? (
+                <div className='error-wrapper'>
+                    <ErrorAlert />
+                </div>
+            ) : null}
         </section>
     );
 };

@@ -40,7 +40,6 @@ export const updateBicycleStatus: any = createAsyncThunk(
     'bicycles/updateStatus',
     async ({ id, status }: any) => {
         const statusLowerCased = status.toLowerCase()
-        console.log(statusLowerCased)
         try {
             const response = await fetch(`http://localhost:4444/update-product-status/${id}`, {
             method: 'PUT',

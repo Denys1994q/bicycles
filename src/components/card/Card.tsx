@@ -17,8 +17,10 @@ interface ICardProps extends ICard {
 
 const Card: React.FC<ICardProps> = ({name, type, status, color, id, price, onUpdateCard, onRemoveCard}) => {
 
+    const cardClass = `card status-${status}`;
+
     return (
-        <article className='card'>
+        <article className={cardClass}>
             <section className='card__title'>
                 <section className='title'>
                     <h2 className='title__name'>{name}&nbsp;-&nbsp;</h2>
