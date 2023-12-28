@@ -2,7 +2,7 @@ import "./AdminPanel.sass";
 import CardForm from "../../components/card-form/Card-form";
 import Statistics from "../../components/statistics/Statistics";
 import { useDispatch } from "react-redux";
-import { createNewBicycle, getAllBicycles, removeBicycle } from "../../store/slices/bicycles";
+import { createNewBicycle, getAllBicycles, removeBicycle, updateBicycleStatus } from "../../store/slices/bicycles";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Cards from "../../components/cards/Cards";
@@ -39,7 +39,7 @@ const AdminPanel = () => {
 
     type BicycleStatus = "available" | "busy" | "unavailable";
     const onUpdateCardStatus = (id: number, status: BicycleStatus) => {
-        console.log(id, status)
+        dispatch(updateBicycleStatus({id, status}))
     }
 
     const errorOrCards = getAllBicyclesError || removeBicycleError ? 

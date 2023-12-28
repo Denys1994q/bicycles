@@ -36,28 +36,30 @@ export const createNewBicycle: any = createAsyncThunk(
     }
 );
 
-export const updateBicycleStatus = createAsyncThunk(
+export const updateBicycleStatus: any = createAsyncThunk(
     'bicycles/updateStatus',
     async ({ id, status }: any) => {
-      try {
-        const response = await fetch(`http://localhost:4444/update-product-status/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ status }),
-        });
-  
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData[0].msg || 'Failed to update bicycle status');
+        const statusLowerCased = status.toLowerCase()
+        console.log(statusLowerCased)
+        try {
+            const response = await fetch(`http://localhost:4444/update-product-status/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: statusLowerCased }),
+            });
+    
+            if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData[0].msg || 'Failed to update bicycle status');
+            }
+    
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            throw error;
         }
-  
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        throw error;
-      }
     }
 );
   

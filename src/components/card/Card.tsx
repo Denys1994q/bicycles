@@ -11,10 +11,12 @@ interface ICard {
 }
 
 interface ICardProps extends ICard {
-    onRemoveCard: (id: number) => void
+    onRemoveCard: (id: number) => void,
+    onUpdateCard: (id: number, status: string) => void,
 }
 
-const Card: React.FC<ICardProps> = ({name, type, color, id, price, onRemoveCard}) => {
+const Card: React.FC<ICardProps> = ({name, type, status, color, id, price, onUpdateCard, onRemoveCard}) => {
+
     return (
         <article className='card'>
             <section className='card__title'>
@@ -30,7 +32,7 @@ const Card: React.FC<ICardProps> = ({name, type, color, id, price, onRemoveCard}
             </section>
             <div className='statusPriceWrapper'>
                 <section className='card__status'>
-                    <Select label='status' options={['Available', 'Busy', 'Unavailable']} />
+                    <Select label='status' options={['available', 'busy', 'unavailable']} activeOption={status}  id={id} onSelect={onUpdateCard} />
                 </section>
                 <section className='card__price'>
                     {price} UAH/hr.
