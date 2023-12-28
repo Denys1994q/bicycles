@@ -24,7 +24,9 @@ mongoose
     .then(() => console.log("DB Ok"))
     .catch(err => console.log("ERROR", err));
 
-// app bicycle
+// get all bicycles
+app.get("/bicycles", BicyclesController.getAllBicycles) 
+// create bicycle
 app.post("/create-product", createBicycleValidation, handleValidationErrors, BicyclesController.createBicycle);
 // remove bicycle
 app.delete("/remove-product/:id", BicyclesController.removeBicycle);

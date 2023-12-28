@@ -4,12 +4,19 @@ import TextInput from "../inputs/text-input/Text-input";
 import Textarea from "../inputs/textarea/Textarea";
 import PrimaryBtn from "../btns/primary-btn/Primary-btn";
 
-const CardForm = () => {
+interface ICardFormProps {
+    onSubmit: any, 
+    loading?: boolean, 
+    error?: boolean, 
+    errorMsg?: string
+}
+
+const CardForm: React.FC<ICardFormProps> = ({onSubmit, loading, error, errorMsg}: any) => {
     const [formData, setFormData] = useState({
         name: "",
         type: "",
         color: "",
-        wheel_size: 0,
+        wheelSize: 0,
         price: 0,
         id: 0,
         description: "",
@@ -32,7 +39,6 @@ const CardForm = () => {
     const [clearValue, setClearValue] = useState(false)
 
     const onInputChange = (id: string, value: string) => {
-        console.log(id, value)
         setFormData(prevState => ({
             ...prevState,
             [id]: value,
@@ -41,7 +47,7 @@ const CardForm = () => {
         id === "type" && setTypeIsDirty(true);
         id === "color" && setColorIsDirty(true);
         id === "description" && setDescriptionIsDirty(true);
-        id === "wheel_size" && setWheelSizeIsDirty(true);
+        id === "wheelSize" && setWheelSizeIsDirty(true);
         id === "price" && setPriceIsDirty(true);
         id === "id" && setIdIsDirty(true);
     };
@@ -53,8 +59,7 @@ const CardForm = () => {
 
     const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // validateForm()
-        console.log(formData);
+        onSubmit(formData)
     };
 
     const validateForm = () => {
@@ -62,7 +67,7 @@ const CardForm = () => {
         setTypeError(typeIsDirty && formData["type"].length < 5);
         setColorError(colorIsDirty && formData["color"].length < 5);
         setDescriptionError(descriptionIsDirty && formData["description"].length < 5);
-        setWheelSizeError(wheelSizeIsDirty && formData["wheel_size"] <= 0);
+        setWheelSizeError(wheelSizeIsDirty && formData["wheelSize"] <= 0);
         setPriceError(priceIsDirty && formData["price"] <= 0);
         setIdError(idIsDirty && formData["id"] <= 0);
     };
@@ -130,7 +135,7 @@ const CardForm = () => {
             <TextInput 
                 isNumberType
                 clearValue={clearValue}
-                id='wheel_size' 
+                id='wheelSize' 
                 placeholder='Wheel size' 
                 error={wheelSizeError}
                 errorMsg='Field is required'
@@ -160,9 +165,10 @@ const CardForm = () => {
                 errorMsg='Min 5 letters'
             />
             <div className='cardForm__btns'>
-                <PrimaryBtn text='save' onClick={submitForm} disabled={isDisabledSubmitBtn} />
+                <PrimaryBtn text='save' onClick={submitForm} disabled={isDisabledSubmitBtn} loading={loading} />
                 <PrimaryBtn text='clear' onClick={clearForm} />
             </div>
+            {error && <p className="error">{errorMsg ? errorMsg : 'Sorry, something is wrong...'}</p> }
         </form>
     );
 };

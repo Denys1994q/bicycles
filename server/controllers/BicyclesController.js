@@ -1,5 +1,15 @@
 import Bicycle from "../models/Bicycle.js";
 
+export const getAllBicycles = async (req, res) => {
+    try {
+        const allBicycles = await Bicycle.find();
+        res.status(200).json(allBicycles);
+    } catch (err) {
+        console.error("Error getting all bicycles:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
 export const createBicycle = async (req, res) => {
     try {
         const bicycle = new Bicycle({
@@ -13,7 +23,10 @@ export const createBicycle = async (req, res) => {
         });
 
         await bicycle.save();
-        res.status(201).json({ message: "Bicycle added successfully" });
+
+        const allBicycles = await Bicycle.find();
+
+        res.status(201).json({ message: "Bicycle added successfully", bicycles: allBicycles });
     } catch (err) {
         console.error("Error adding bicycle:", err);
         res.status(500).json({ error: "Internal Server Error" });
@@ -30,7 +43,10 @@ export const removeBicycle = async (req, res) => {
         }
 
         await Bicycle.deleteOne({ id: bicycleIdToRemove });
-        res.status(200).json({ message: "Bicycle removed successfully" });
+
+        const allBicycles = await Bicycle.find();
+
+        res.status(200).json({ message: "Bicycle removed successfully", bicycles: allBicycles });
     } catch (err) {
         console.error("Error removing bicycle:", err);
         res.status(500).json({ error: "Internal Server Error" });
@@ -57,7 +73,9 @@ export const updateBicycleStatus = async (req, res) => {
         bicycle.status = newStatus;
         await bicycle.save();
 
-        res.status(200).json({ message: "Bicycle status updated successfully" });
+        const allBicycles = await Bicycle.find();
+
+        res.status(200).json({ message: "Bicycle status updated successfully", bicycles: allBicycles });
     } catch (err) {
         console.error("Error updating bicycle status:", err);
         res.status(500).json({ error: "Internal Server Error" });
