@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import { BicyclesController } from "./controllers/index.js";
-import {createBicycleValidation} from "./validation/validation.js";
+import { createBicycleValidation } from "./validation/validation.js";
 import handleValidationErrors from "./utils/handleValidationErrors.js";
 
 const app = express();
@@ -19,13 +19,13 @@ dotenv.config();
 
 mongoose
     .connect(
-        `mongodb+srv://${process.env.MONGODB_KEY}@cluster0.l8hygki.mongodb.net/bicycles-db?retryWrites=true&w=majority`
+        `mongodb+srv://Denys1994:pp74tvVguAJTZZa@cluster0.l8hygki.mongodb.net/bicycles-db?retryWrites=true&w=majority`
     )
     .then(() => console.log("DB Ok"))
     .catch(err => console.log("ERROR", err));
 
 // get all bicycles
-app.get("/bicycles", BicyclesController.getAllBicycles) 
+app.get("/bicycles", BicyclesController.getAllBicycles);
 // create bicycle
 app.post("/create-product", createBicycleValidation, handleValidationErrors, BicyclesController.createBicycle);
 // remove bicycle
