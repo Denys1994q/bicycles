@@ -23,7 +23,7 @@ const TextInput: React.FC<ITextInputProps> = ({id, isNumberType, clearValue, pla
     };
 
     return (
-        <div>
+        <div className='textInput-wrapper'>
             <input 
                 id={id}
                 type={isNumberType ? 'number' : 'text'} 

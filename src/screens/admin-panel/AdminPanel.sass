@@ -1,4 +1,5 @@
 @import '../../styles/variables.sass'
+@import '../../styles/mixins.sass'
 
 .adminPanel
     position: relative
@@ -6,15 +7,30 @@
     flex-wrap: wrap
     flex-grow: 1
     gap: 10px
+    @include respond(phoneL)
+        flex-grow: 0
     &__cards
         width: 640px
         // max-height: 100vh
         // overflow-y: scroll
         padding: 10px 10px 0 10px
         border-right: 1px solid $middle-grey-2
+        @include respond(tab-land)
+            width: 48%
+            flex-grow: 1
+        @include respond(phoneL)
+            width: 100%
+            order: 1
     &__form
         width: 500px
         padding: 10px 10px 0 0
+        @include respond(tab-land)
+            width: 48%
+        @include respond(tab-port)
+            width: 30%
+        @include respond(phoneL)
+            width: 100%
+            padding: 10px
 .error-wrapper
     position: absolute
     bottom: 10px

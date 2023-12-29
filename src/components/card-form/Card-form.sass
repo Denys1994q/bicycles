@@ -1,4 +1,5 @@
-@import '../../styles/variables.sass'
+@import '../../styles/variables'
+@import '../../styles/mixins'
 
 .cardForm
     display: flex
@@ -7,8 +8,13 @@
     border-bottom: 1px solid $middle-grey-2
     &__btns
         display: flex
+        flex-wrap: wrap
         gap: 10px
         margin-bottom: 10px
+        @include respond(tab-port)
+            width: 100%
+.textareaWrapper
+    width: 480px
 .error
     color: red
     margin-bottom: 10px

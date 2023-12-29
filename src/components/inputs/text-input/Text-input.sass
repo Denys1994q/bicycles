@@ -1,5 +1,9 @@
 @import '../../../styles/variables.sass'
-    
+@import '../../../styles/mixins'
+
+.textInput-wrapper
+    @include respond(phoneL)
+        width: 100%
 .textInput
     width: 235px
     background: $light-grey
@@ -8,6 +12,8 @@
     border-radius: 5px
     padding: 5px 16px
     outline: none
+    @include respond(tab-port)
+        width: 100%
     &-error
         border: 1px solid red
 .error-msg

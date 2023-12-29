@@ -156,14 +156,16 @@ const CardForm: React.FC<ICardFormProps> = ({onSubmit, loading, error, errorMsg}
                 error={idError}
                 errorMsg='Field is required' 
                 onInputChange={onInputChange} />
-            <Textarea
-                id='description'
-                clearValue={clearValue}
-                placeholder='Description'
-                onTextareaChange={onInputChange}
-                error={descriptionError}
-                errorMsg='Min 5 letters'
-            />
+            <div className="textareaWrapper">
+                <Textarea
+                    id='description'
+                    clearValue={clearValue}
+                    placeholder='Description'
+                    onTextareaChange={onInputChange}
+                    error={descriptionError}
+                    errorMsg='Min 5 letters'
+                />
+            </div>
             <div className='cardForm__btns'>
                 <PrimaryBtn text='save' onClick={submitForm} disabled={isDisabledSubmitBtn} loading={loading} />
                 <PrimaryBtn text='clear' onClick={clearForm} />
