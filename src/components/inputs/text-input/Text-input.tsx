@@ -8,7 +8,7 @@ interface ITextInputProps {
     clearValue?: boolean,
     error?: boolean,
     errorMsg?: string,
-    onInputChange?: any
+    onInputChange?: (id: string, value: string) => void
 }
 
 const TextInput: React.FC<ITextInputProps> = ({id, isNumberType, clearValue, placeholder, error, errorMsg, onInputChange}) => {

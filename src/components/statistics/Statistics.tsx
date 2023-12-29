@@ -1,6 +1,5 @@
 import "./Statistics.sass";
 
-
 interface IStatItem {
     title: string,
     value: number,

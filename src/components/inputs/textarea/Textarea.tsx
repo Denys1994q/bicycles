@@ -7,7 +7,7 @@ interface ITextareaProps {
     clearValue?: boolean,
     error?: boolean,
     errorMsg?: string,
-    onTextareaChange?: any
+    onTextareaChange?: (id: string, value: string) => void
 }
 
 const Textarea: React.FC<ITextareaProps> = ({id, clearValue, placeholder, error, errorMsg, onTextareaChange}) => {

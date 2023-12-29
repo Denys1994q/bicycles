@@ -6,7 +6,7 @@ interface ISelectProps {
     options: string[];
     id: number,
     onSelect: (id: number, status: string) => void,
-    activeOption: string
+    activeOption?: string
 }
 
 const Select: React.FC<ISelectProps> = ({ label, id, options, activeOption, onSelect }: ISelectProps) => {

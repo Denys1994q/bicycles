@@ -1,16 +1,8 @@
 import './Card.sass'
 import Select from '../inputs/select/Select';
+import { IBicycle } from '../../store/slices/models/bicycle';
 
-interface ICard {
-    name: string,
-    type: string,
-    color: string,
-    id: number,
-    price: number,
-    status: string,
-}
-
-interface ICardProps extends ICard {
+interface ICardProps extends IBicycle {
     onRemoveCard: (id: number) => void,
     onUpdateCard: (id: number, status: string) => void,
 }
@@ -18,6 +10,7 @@ interface ICardProps extends ICard {
 const Card: React.FC<ICardProps> = ({name, type, status, color, id, price, onUpdateCard, onRemoveCard}) => {
 
     const cardClass = `card status-${status}`;
+    const fixedPrice = price.toFixed(2)
 
     return (
         <article className={cardClass}>
@@ -27,17 +20,25 @@ const Card: React.FC<ICardProps> = ({name, type, status, color, id, price, onUpd
                     <p className='title__type'>{type}</p>
                     <p className='title__color'>({color})</p>
                 </section>
-                <img src={require('../../imgs/close-icon.png')} className='close-icon' onClick={() => onRemoveCard(id)} />
+                <img 
+                    src={require('../../imgs/close-icon.png')} 
+                    alt='close-icon'
+                    className='close-icon' 
+                    onClick={() => onRemoveCard(id)}  />
             </section>
             <section className='card__id'>
                 ID: {id}
             </section>
             <div className='statusPriceWrapper'>
                 <section className='card__status'>
-                    <Select label='status' options={['available', 'busy', 'unavailable']} activeOption={status}  id={id} onSelect={onUpdateCard} />
+                    <Select 
+                        label='status' 
+                        options={['available', 'busy', 'unavailable']} 
+                        activeOption={status}  id={id} 
+                        onSelect={onUpdateCard} />
                 </section>
                 <section className='card__price'>
-                    {price} UAH/hr.
+                    {fixedPrice} UAH/hr.
                 </section>
             </div>
         </article>

@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk  } from "@reduxjs/toolkit";
+import { IBicycle } from "./models/bicycle";
+import { IBicyclesState } from "./models/bicycle";
 
 export const getAllBicycles: any = createAsyncThunk(
     "bicycles/getAllBicycles",
@@ -80,11 +82,11 @@ export const removeBicycle: any = createAsyncThunk(
       const data = await response.json();
       return data;
     }
-  );
+);
 
-const initialState = {
+
+const initialState: IBicyclesState = {
     bicycles: [],
-    // 
     createNewBicycleLoading: false,
     createNewBicycleError: false,
     createNewBicycleErrorMsg: '',

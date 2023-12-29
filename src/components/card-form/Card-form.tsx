@@ -3,15 +3,16 @@ import { useState, useEffect } from "react";
 import TextInput from "../inputs/text-input/Text-input";
 import Textarea from "../inputs/textarea/Textarea";
 import PrimaryBtn from "../btns/primary-btn/Primary-btn";
+import { IBicycle } from "../../store/slices/models/bicycle";
 
 interface ICardFormProps {
-    onSubmit: any, 
+    onSubmit: (data: IBicycle) => void, 
     loading?: boolean, 
     error?: boolean, 
     errorMsg?: string
 }
 
-const CardForm: React.FC<ICardFormProps> = ({onSubmit, loading, error, errorMsg}: any) => {
+const CardForm: React.FC<ICardFormProps> = ({onSubmit, loading, error, errorMsg}) => {
     const [formData, setFormData] = useState({
         name: "",
         type: "",
