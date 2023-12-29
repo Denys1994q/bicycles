@@ -138,7 +138,7 @@ const BicyclesSlice = createSlice({
                 state.removeBicycleLoading = false;
                 state.removeBicycleError = false;
             })
-            .addCase(removeBicycle.rejected, (state, action) => {
+            .addCase(removeBicycle.rejected, (state) => {
                 state.removeBicycleError = true;
                 state.removeBicycleLoading = false;
             })
@@ -152,7 +152,7 @@ const BicyclesSlice = createSlice({
                 state.updateBicycleStatusLoading = false;
                 state.updateBicycleStatusError = false;
             })
-            .addCase(updateBicycleStatus.rejected, (state, action) => {
+            .addCase(updateBicycleStatus.rejected, (state) => {
                 state.updateBicycleStatusError = true;
                 state.updateBicycleStatusLoading = false;
             })
@@ -166,7 +166,7 @@ const BicyclesSlice = createSlice({
                 state.getAllBicyclesLoading = false;
                 state.getAllBicyclesError = false;
             })
-            .addCase(getAllBicycles.rejected, (state, action) => {
+            .addCase(getAllBicycles.rejected, (state) => {
                 state.getAllBicyclesError = true
                 state.getAllBicyclesLoading = false
             });
