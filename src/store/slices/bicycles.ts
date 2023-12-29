@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk  } from "@reduxjs/toolkit";
 import { IBicycle } from "./models/bicycle";
 import { IBicyclesState } from "./models/bicycle";
 
-export const getAllBicycles: any = createAsyncThunk(
+export const getAllBicycles = createAsyncThunk(
     "bicycles/getAllBicycles",
     async () => {
       const response = await fetch("http://localhost:4444/bicycles");
@@ -17,9 +17,9 @@ export const getAllBicycles: any = createAsyncThunk(
     }
 );
 
-export const createNewBicycle: any = createAsyncThunk(
+export const createNewBicycle = createAsyncThunk(
     "bicycles/createNewBicycle",
-    async (bicycleData) => {
+    async (bicycleData: IBicycle) => {
       const response = await fetch("http://localhost:4444/create-product", {
         method: 'POST',
         headers: {
@@ -38,9 +38,9 @@ export const createNewBicycle: any = createAsyncThunk(
     }
 );
 
-export const updateBicycleStatus: any = createAsyncThunk(
+export const updateBicycleStatus = createAsyncThunk(
     'bicycles/updateStatus',
-    async ({ id, status }: any) => {
+    async ({ id, status }: {id: number, status: "available" | "busy" | "unavailable"}) => {
         const statusLowerCased = status.toLowerCase()
         try {
             const response = await fetch(`http://localhost:4444/update-product-status/${id}`, {
@@ -64,9 +64,9 @@ export const updateBicycleStatus: any = createAsyncThunk(
     }
 );
   
-export const removeBicycle: any = createAsyncThunk(
+export const removeBicycle = createAsyncThunk(
     "bicycles/removeBicycle",
-    async (bicycleId) => {
+    async (bicycleId: number) => {
       const response = await fetch(`http://localhost:4444/remove-product/${bicycleId}`, {
         method: 'DELETE',
         headers: {
@@ -118,7 +118,7 @@ const BicyclesSlice = createSlice({
                 state.createNewBicycleError = false;
             })
             .addCase(createNewBicycle.rejected, (state, action) => {
-                if (action.error) {
+                if (action.error.message) {
                     state.createNewBicycleError = true;
                     state.createNewBicycleErrorMsg = action.error.message;
                     state.createNewBicycleLoading = false;
@@ -162,7 +162,6 @@ const BicyclesSlice = createSlice({
                 state.getAllBicyclesError = false;
             })
             .addCase(getAllBicycles.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.bicycles = action.payload;
                 state.getAllBicyclesLoading = false;
                 state.getAllBicyclesError = false;

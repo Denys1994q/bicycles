@@ -7,15 +7,14 @@ interface ITextareaProps {
     clearValue?: boolean,
     error?: boolean,
     errorMsg?: string,
+    value?: string,
     onTextareaChange?: (id: string, value: string) => void
 }
 
-const Textarea: React.FC<ITextareaProps> = ({id, clearValue, placeholder, error, errorMsg, onTextareaChange}) => {
-    const [value, setValue] = useState('')
+const Textarea: React.FC<ITextareaProps> = ({id, value, clearValue, placeholder, error, errorMsg, onTextareaChange}) => {
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         const inputValue = event.target.value;
-        setValue(inputValue)
         if (onTextareaChange) {
             onTextareaChange(id, inputValue)
         }
@@ -24,7 +23,7 @@ const Textarea: React.FC<ITextareaProps> = ({id, clearValue, placeholder, error,
     return (
         <div>
             <textarea 
-                value={clearValue ? '' : value}
+                value={value}
                 onChange={handleChange}
                 placeholder={placeholder} 
                 className={error ? 'textarea textarea-error' : 'textarea'} >

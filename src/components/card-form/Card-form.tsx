@@ -6,20 +6,20 @@ import PrimaryBtn from "../btns/primary-btn/Primary-btn";
 import { IBicycle } from "../../store/slices/models/bicycle";
 
 interface ICardFormProps {
-    onSubmit: (data: IBicycle) => void, 
-    loading?: boolean, 
-    error?: boolean, 
-    errorMsg?: string
+    onSubmit: (data: IBicycle) => void;
+    loading?: boolean;
+    error?: boolean;
+    errorMsg?: string;
 }
 
-const CardForm: React.FC<ICardFormProps> = ({onSubmit, loading, error, errorMsg}) => {
+const CardForm: React.FC<ICardFormProps> = ({ onSubmit, loading, error, errorMsg }) => {
     const [formData, setFormData] = useState({
         name: "",
         type: "",
         color: "",
-        wheelSize: 0,
-        price: 0,
-        id: 0,
+        wheelSize: "" as any,
+        price: "" as any,
+        id: "" as any,
         description: "",
     });
     const [nameError, setNameError] = useState(false);
@@ -37,7 +37,6 @@ const CardForm: React.FC<ICardFormProps> = ({onSubmit, loading, error, errorMsg}
     const [descriptionError, setDescriptionError] = useState(false);
     const [descriptionIsDirty, setDescriptionIsDirty] = useState(false);
     const [isDisabledSubmitBtn, setIsDisabledSubmitBtn] = useState(true);
-    const [clearValue, setClearValue] = useState(false)
 
     const onInputChange = (id: string, value: string) => {
         setFormData(prevState => ({
@@ -54,13 +53,13 @@ const CardForm: React.FC<ICardFormProps> = ({onSubmit, loading, error, errorMsg}
     };
 
     useEffect(() => {
-        setClearValue(false)
+        // setClearValue(false);
         validateForm();
     }, [formData]);
 
     const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onSubmit(formData)
+        onSubmit(formData);
     };
 
     const validateForm = () => {
@@ -90,36 +89,47 @@ const CardForm: React.FC<ICardFormProps> = ({onSubmit, loading, error, errorMsg}
             setIsDisabledSubmitBtn(true);
         }
     }, [
-        nameError, 
-        typeError, 
-        colorError, 
-        descriptionError, 
-        wheelSizeError, 
-        wheelSizeIsDirty, 
-        priceError, 
-        priceIsDirty, 
-        idError, 
-        idIsDirty
+        nameError,
+        typeError,
+        colorError,
+        descriptionError,
+        wheelSizeError,
+        wheelSizeIsDirty,
+        priceError,
+        priceIsDirty,
+        idError,
+        idIsDirty,
     ]);
 
     const clearForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setClearValue(true)
-    }
+        setFormData({
+            name: "",
+            type: "",
+            color: "",
+            wheelSize: 0,
+            price: 0,
+            id: 0,
+            description: " ",
+        });
+        // помилки забрати
+        // description
+        setIsDisabledSubmitBtn(true);
+    };
 
     return (
         <form className='cardForm'>
             <TextInput
                 id='name'
                 placeholder='Name'
-                clearValue={clearValue}
+                value={formData['name']}
                 onInputChange={onInputChange}
                 error={nameError}
                 errorMsg='Min 5 letters'
             />
             <TextInput
                 id='type'
-                clearValue={clearValue}
+                value={formData['type']}
                 placeholder='Type'
                 onInputChange={onInputChange}
                 error={typeError}
@@ -127,40 +137,43 @@ const CardForm: React.FC<ICardFormProps> = ({onSubmit, loading, error, errorMsg}
             />
             <TextInput
                 id='color'
-                clearValue={clearValue}
+                value={formData['color']}
                 placeholder='Color'
                 onInputChange={onInputChange}
                 error={colorError}
                 errorMsg='Min 5 letters'
             />
-            <TextInput 
+            <TextInput
                 isNumberType
-                clearValue={clearValue}
-                id='wheelSize' 
-                placeholder='Wheel size' 
+                value={formData['wheelSize']}
+                id='wheelSize'
+                placeholder='Wheel size'
                 error={wheelSizeError}
                 errorMsg='Field is required'
-                onInputChange={onInputChange} />
-            <TextInput 
+                onInputChange={onInputChange}
+            />
+            <TextInput
                 isNumberType
-                clearValue={clearValue}
-                id='price' 
-                placeholder='Price' 
+                value={formData['price']}
+                id='price'
+                placeholder='Price'
                 error={priceError}
                 errorMsg='Field is required'
-                onInputChange={onInputChange} />
-            <TextInput 
+                onInputChange={onInputChange}
+            />
+            <TextInput
                 isNumberType
-                clearValue={clearValue}
-                id='id' 
+                value={formData['id']}
+                id='id'
                 placeholder='ID (slug)'
                 error={idError}
-                errorMsg='Field is required' 
-                onInputChange={onInputChange} />
-            <div className="textareaWrapper">
+                errorMsg='Field is required'
+                onInputChange={onInputChange}
+            />
+            <div className='textareaWrapper'>
                 <Textarea
                     id='description'
-                    clearValue={clearValue}
+                    value={formData['description']}
                     placeholder='Description'
                     onTextareaChange={onInputChange}
                     error={descriptionError}
@@ -171,7 +184,7 @@ const CardForm: React.FC<ICardFormProps> = ({onSubmit, loading, error, errorMsg}
                 <PrimaryBtn text='save' onClick={submitForm} disabled={isDisabledSubmitBtn} loading={loading} />
                 <PrimaryBtn text='clear' onClick={clearForm} />
             </div>
-            {error && <p className="error">{errorMsg ? errorMsg : 'Sorry, something is wrong...'}</p> }
+            {error && <p className='error'>{errorMsg ? errorMsg : "Sorry, something is wrong..."}</p>}
         </form>
     );
 };
