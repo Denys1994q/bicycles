@@ -12,19 +12,21 @@ This project's frontend was bootstrapped with [Create React App](https://github.
 
 Make sure you have Node.js and npm installed on your computer.
 
-#### Frontend Installation
+#### Installation
+
 ```bash
 git clone https://github.com/Denys1994q/bicycles
+
+#### Frontend Installation
 cd bicycles
 npm install
 
 #### Backend Installation
-```bash
 cd server
 npm install
 npm run dev
 
 #### Start the Application
-```bash
 cd bicycles
 npm start
+```
