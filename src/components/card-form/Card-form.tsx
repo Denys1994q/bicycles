@@ -53,7 +53,6 @@ const CardForm: React.FC<ICardFormProps> = ({ onSubmit, loading, error, errorMsg
     };
 
     useEffect(() => {
-        // setClearValue(false);
         validateForm();
     }, [formData]);
 
@@ -107,13 +106,11 @@ const CardForm: React.FC<ICardFormProps> = ({ onSubmit, loading, error, errorMsg
             name: "",
             type: "",
             color: "",
-            wheelSize: 0,
-            price: 0,
-            id: 0,
+            wheelSize: "" as any,
+            price: "" as any,
+            id: "" as any,
             description: " ",
         });
-        // помилки забрати
-        // description
         setIsDisabledSubmitBtn(true);
     };
 
